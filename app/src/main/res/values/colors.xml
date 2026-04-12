@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- User Requested Dark Theme Colors -->
+    <color name="primary">#E53935</color>
+    <color name="bg_dark">#121212</color>
+    <color name="text_main">#FFFFFF</color>
+    <color name="surface_dark">#1E1E1E</color>
+    <color name="success">#4CAF50</color>
+
+    <!-- Accent and Supporting Colors -->
+    <color name="primary_dark">#B71C1C</color>
+    <color name="primary_light">#FFEBEE</color>
+    <color name="accent">#FFD600</color>
+    <color name="gray_light">#333333</color>
+    <color name="text_secondary">#B0BEC5</color>
+
+    <!-- Indian Specific Colors -->
+    <color name="saffron">#FF9933</color>
+    <color name="india_green">#138808</color>
+</resources>

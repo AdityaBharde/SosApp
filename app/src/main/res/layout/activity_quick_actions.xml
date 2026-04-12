@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quick Actions &amp; Logs"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvWelcomeUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User: "
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/tvHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/btnCall"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Call 112"
+        style="@style/EmergencyButton"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/tvWelcomeUser"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnEmail"
+        android:layout_marginEnd="8dp"/>
+
+    <Button
+        android:id="@+id/btnEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Email Alert"
+        style="@style/EmergencyButton"
+        app:layout_constraintTop_toTopOf="@id/btnCall"
+        app:layout_constraintStart_toEndOf="@id/btnCall"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/btnShare"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Share Details"
+        style="@style/EmergencyButton"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/btnCall"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/btnShare"/>
+
+    <TextView
+        android:id="@+id/tvLogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register Medical/Safe Zone Note"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <EditText
+        android:id="@+id/etNoteContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter details here..."
+        app:layout_constraintTop_toBottomOf="@id/tvLogTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <RadioButton
+        android:id="@+id/rbMedical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Medical Note"
+        android:checked="true"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/etNoteContent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <RadioButton
+        android:id="@+id/rbSafeZone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Safe Zone"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="@id/rbMedical"
+        app:layout_constraintStart_toEndOf="@id/rbMedical"/>
+
+    <Button
+        android:id="@+id/btnSaveLog"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Save to Internal Storage"
+        style="@style/EmergencyButton"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/rbMedical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvLogCount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Counts: Medical (0), Safe Zone (0)"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/btnSaveLog"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
