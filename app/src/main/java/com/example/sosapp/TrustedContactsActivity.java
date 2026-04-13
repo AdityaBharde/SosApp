@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class TrustedContactsActivity extends AppCompatActivity {
     private DatabaseHelper dbHelper;
     private EditText etName, etPhone, etRelation;
-    private Button btnRegister, btnReset, btnViewAll;
+    private Button btnRegister, btnReset, btnViewAll, btnDeleteAll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +25,12 @@ public class TrustedContactsActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         btnReset = findViewById(R.id.btnReset);
         btnViewAll = findViewById(R.id.btnViewAll);
+        btnDeleteAll = findViewById(R.id.btnDeleteAll);
 
         btnRegister.setOnClickListener(v -> {
-            String name = etName.getText().toString();
-            String phone = etPhone.getText().toString();
-            String relation = etRelation.getText().toString();
+            String name = etName.getText().toString().trim();
+            String phone = etPhone.getText().toString().trim();
+            String relation = etRelation.getText().toString().trim();
 
             if (name.isEmpty() || phone.isEmpty() || relation.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
@@ -48,6 +49,18 @@ public class TrustedContactsActivity extends AppCompatActivity {
         btnReset.setOnClickListener(v -> resetFields());
 
         btnViewAll.setOnClickListener(v -> viewAll());
+
+        btnDeleteAll.setOnClickListener(v -> {
+            new AlertDialog.Builder(this)
+                .setTitle("Confirm Delete")
+                .setMessage("Are you sure you want to delete all contacts?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    dbHelper.deleteAllData();
+                    Toast.makeText(this, "All contacts deleted", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("No", null)
+                .show();
+        });
     }
 
     private void resetFields() {

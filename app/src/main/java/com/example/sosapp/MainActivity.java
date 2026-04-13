@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,14 +21,11 @@ public class MainActivity extends AppCompatActivity {
         String name = prefs.getString("userName", "User");
         Toast.makeText(this, "Welcome, " + name, Toast.LENGTH_SHORT).show();
 
-        findViewById(R.id.btnIncidentReport).setOnClickListener(v -> 
-            startActivity(new Intent(this, IncidentReportActivity.class)));
+        findViewById(R.id.btnIncidentReport).setOnClickListener(v ->
+                startActivity(new Intent(this, IncidentReportActivity.class)));
 
-        findViewById(R.id.btnDispatchCenter).setOnClickListener(v -> 
-            startActivity(new Intent(this, DispatchCenterActivity.class)));
-
-        findViewById(R.id.btnTrustedContacts).setOnClickListener(v -> 
-            startActivity(new Intent(this, TrustedContactsActivity.class)));
+        findViewById(R.id.btnTrustedContacts).setOnClickListener(v ->
+                startActivity(new Intent(this, TrustedContactsActivity.class)));
 
         findViewById(R.id.btnQuickActions).setOnClickListener(v -> {
             Intent intent = new Intent(this, QuickActionsActivity.class);
@@ -40,25 +37,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendLiveLocation() {
-        if (androidx.core.content.ContextCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) 
+        if (androidx.core.content.ContextCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS)
                 != android.content.pm.PackageManager.PERMISSION_GRANTED) {
-            androidx.core.app.ActivityCompat.requestPermissions(this, 
+            androidx.core.app.ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.SEND_SMS}, 1);
             return;
         }
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         android.database.Cursor cursor = dbHelper.getAllData();
-        
+
         if (cursor.getCount() == 0) {
             Toast.makeText(this, "No trusted contacts found to send location!", Toast.LENGTH_LONG).show();
             return;
         }
 
-        String mockLocation = "Emergency! I need help. My current location is: https://www.google.com/maps?q=28.6139,77.2090"; 
+        String mockLocation = "Emergency! I need help. My current location is: https://www.google.com/maps?q=28.6139,77.2090";
         android.telephony.SmsManager smsManager = android.telephony.SmsManager.getDefault();
         int sentCount = 0;
-        
+
         while (cursor.moveToNext()) {
             String phone = cursor.getString(2);
             try {
@@ -68,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "Failed to send SMS to " + phone, e);
             }
         }
-        
+
         if (sentCount > 0) {
             Toast.makeText(this, "Emergency Alert & Live Location sent to " + sentCount + " contacts!", Toast.LENGTH_LONG).show();
         } else {
