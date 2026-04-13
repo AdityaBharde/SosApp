@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import java.util.ArrayList;
@@ -35,28 +36,43 @@ public class DispatchCenterActivity extends AppCompatActivity {
     }
 
     private void showConfirmationDialog() {
+        if (!cbPolice.isChecked() && !cbAmbulance.isChecked() && !cbFire.isChecked()) {
+            Toast.makeText(this, "Please select at least one service", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Confirm Request");
         builder.setMessage("Are you sure you want to dispatch selected services?");
         builder.setPositiveButton("Yes", (dialog, which) -> {
-            sendNotification();
+            ArrayList<String> selectedServices = getSelectedServices();
+            int priorityScore = (int) (Math.random() * 100);
+
+            sendNotification(selectedServices, priorityScore);
+
+            // Directly navigate to results
+            Intent intent = new Intent(this, DispatchResultActivity.class);
+            intent.putStringArrayListExtra("SERVICES", selectedServices);
+            intent.putExtra("PRIORITY", priorityScore);
+            startActivity(intent);
             finish();
         });
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
         builder.show();
     }
 
-    private void sendNotification() {
+    private ArrayList<String> getSelectedServices() {
         ArrayList<String> selectedServices = new ArrayList<>();
         if (cbPolice.isChecked()) selectedServices.add("Police");
         if (cbAmbulance.isChecked()) selectedServices.add("Ambulance");
         if (cbFire.isChecked()) selectedServices.add("Fire Brigade");
+        return selectedServices;
+    }
 
-        int priorityScore = (int) (Math.random() * 100);
-
+    private void sendNotification(ArrayList<String> services, int priority) {
         Intent intent = new Intent(this, DispatchResultActivity.class);
-        intent.putStringArrayListExtra("SERVICES", selectedServices);
-        intent.putExtra("PRIORITY", priorityScore);
+        intent.putStringArrayListExtra("SERVICES", services);
+        intent.putExtra("PRIORITY", priority);
         
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
